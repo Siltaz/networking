@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
   hints.ai_family = AF_INET;
   hints.ai_socktype = SOCK_STREAM;
 
-  if (getaddrinfo(0, port, &hints, &server) < 0) {
+  if (getaddrinfo(host, port, &hints, &server) < 0) {
     perror("error");
     exit(1);
   }
