@@ -15,5 +15,5 @@ Starting chat client (New Terminal):
 make
 cd build
 # ./chat_client <IP_ADDRESS> <PORT>
-./chat_server 127.0.0.1 65001
+./chat_client 127.0.0.1 65001
 ```
