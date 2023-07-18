@@ -17,8 +17,8 @@ int main(int argc, char *argv[]) {
   char buffer[BUFSIZ], *host, *port;
   fd_set read_fd;
 
-  if (argc < 2) {
-    fprintf(stderr, "Format: client hostname\n");
+  if (argc < 3) {
+    fprintf(stderr, "Format: <IP> <PORT>\n");
     exit(1);
   }
   host = argv[1];

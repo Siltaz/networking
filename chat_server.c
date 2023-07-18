@@ -8,26 +8,31 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#define PORT "65001"
 #define TRUE 1
 #define FALSE 0
 
-int main() {
+int main(int argc, char *argv[]) {
   const int backlog = 10, clientname_size = 32;
   socklen_t address_len = sizeof(struct sockaddr);
   struct addrinfo hints, *server;
   struct sockaddr address;
   int serverfd, clientfd, max_connect, fd, r, x, done = FALSE;
   char clientname[clientname_size], connection[backlog][clientname_size];
-  char buffer[BUFSIZ], send_str[BUFSIZ];
+  char buffer[BUFSIZ], send_str[BUFSIZ], *port;
   fd_set main_fd, read_fd;
+
+  if (argc < 2) {
+    fprintf(stderr, "Format: <PORT>\n");
+    exit(1);
+  }
+  port = argv[1];
 
   memset_s(&hints, sizeof(hints), 0, sizeof(hints));
   hints.ai_family = AF_INET;
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_flags = AI_PASSIVE;
 
-  if (getaddrinfo(0, PORT, &hints, &server) < 0) {
+  if (getaddrinfo(0, port, &hints, &server) < 0) {
     perror("error");
     exit(1);
   }
@@ -44,7 +49,7 @@ int main() {
     exit(1);
   }
 
-  printf("Server started listening on %s...\n", PORT);
+  printf("Server started listening on %s...\n", port);
   if (listen(serverfd, backlog) < 0) {
     perror("error");
     exit(1);
